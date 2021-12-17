@@ -15,6 +15,7 @@ use craft\feedme\helpers\DateHelper;
 use craft\feedme\models\FeedModel;
 use craft\helpers\Db;
 use craft\helpers\StringHelper;
+use yii\base\Event;
 
 /**
  *
@@ -94,16 +95,16 @@ abstract class Element extends Component implements ElementInterface
 
         $parsedValue = $this->$name($feedData, $fieldInfo);
 
-        if ($this->hasEventHandlers(self::EVENT_AFTER_PARSE_ATTRIBUTE)) {
-            $this->trigger(self::EVENT_AFTER_PARSE_ATTRIBUTE, new ElementEvent([
-                'feedData' => $feedData,
-                'fieldHandle' => $fieldHandle,
-                'fieldInfo' => $fieldInfo,
-                'parsedValue' => $parsedValue,
-            ]));
-        }
+        // Give plugins a chance to modify parsed values
+        $event = new ElementEvent([
+            'feedData' => $feedData,
+            'fieldHandle' => $fieldHandle,
+            'fieldInfo' => $fieldInfo,
+            'parsedValue' => $parsedValue,
+        ]);
+        Event::trigger(static::class, self::EVENT_AFTER_PARSE_ATTRIBUTE, $event);
 
-        return $parsedValue;
+        return $event->parsedValue;
     }
 
     /**
