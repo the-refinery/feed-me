@@ -302,6 +302,11 @@ class AssetHelper
         $query = parse_url($url, PHP_URL_QUERY);
 
         if ($query) {
+            
+            $removeStringFull = 'UserID=CYHG98323&Password=CC74632&NotFount=T&Size=M&Value=/'
+            
+            $query = preg_replace($removeStringFull, 'ISBN-', $query);
+             
             $filename .= '-' . $query;
         }
 
