@@ -303,7 +303,7 @@ class AssetHelper
 
         if ($query) {
             
-            $removeStringFull = 'UserID=CYHG98323&Password=CC74632&NotFount=T&Size=M&Value=/'
+            $removeStringFull = '/UserID=CYHG98323&Password=CC74632&NotFount=T&Size=M&Value=/'
             
             $query = preg_replace($removeStringFull, 'ISBN-', $query);
              
