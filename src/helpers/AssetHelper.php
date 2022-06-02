@@ -303,12 +303,22 @@ class AssetHelper
 
         if ($query) {
             
-            $removeStringFull = '/UserID=CYHG98323&Password=CC74632&NotFount=T&Size=M&Value=/'
+            // $removeStringFull = '/UserID=CYHG98323&Password=CC74632&NotFount=T&Size=M&Value=/'
             
-            $query = preg_replace($removeStringFull, 'ISBN-', $query);
+            // $query = preg_replace($removeStringFull, 'ISBN-', $query);
              
             $filename .= '-' . $query;
         }
+
+        $filename = str_replace('UserID','-',$filename);
+        $filename = str_replace('Password','-',$filename);
+        $filename = str_replace('CYHG98323','-',$filename);
+        $filename = str_replace('CC74632','-',$filename);
+        $filename = str_replace('NotFound','-',$filename);
+        $filename = str_replace('T','-',$filename);
+        $filename = str_replace('Size','-',$filename);
+        $filename = str_replace('M','-',$filename);
+        $filename = str_replace('Value','ISBN-',$filename);
 
         $filename = AssetsHelper::prepareAssetName($filename, false);
 
